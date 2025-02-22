@@ -9,23 +9,32 @@ import SwiftUI
 import FirebaseAuth
 
 struct LoginView: View {
+    @State private var isNextViewPresented = false // 次の画面の表示制御用
     var body: some View {
-        Button {
-            // Login Button
-            login()
-        } label: {
-            Text("匿名ログイン")
-                .font(.title)
+        NavigationStack {
+            Button {
+                // Login Button
+                login()
+            } label: {
+                Text("匿名ログイン")
+                    .font(.title)
+            }
+            .buttonStyle(.borderedProminent)
+            
+            // 画面遷移先と、その画面の表示を制御する変数を設定
+            .navigationDestination(isPresented: $isNextViewPresented) {
+                InputUserInfoView()
+            }
         }
-        .buttonStyle(.borderedProminent)
     }
     
     // Login
     func login() {
-        // Firebase Auth の匿名ログインの処理
+        // Firebase Authの匿名ログインの処理
         Auth.auth().signInAnonymously() { authResult, error in
             let user = authResult?.user
             print("LOGIN USER: ", user ?? "NIL")
+            isNextViewPresented = true // 匿名ログインができたら画面遷移
         }
     }
 }
