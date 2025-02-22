@@ -64,7 +64,36 @@ class TimelineViewModel: ObservableObject {
                 } else {
                     print("no userIconURL")
                 }
-            }
+                
+                // 投稿画像のアップロード処理
+                let uploadtaskPostImage = postImageRef.putData(postImageData, metadata: nil) { metadata, error in
+                    if error != nil {
+                        print(error!)
+                        return
+                    }
+                    // ダウンロードURL取得
+                    postImageRef.downloadURL { url, error in
+                        if let url {
+                            postImageUrlStr = url.absoluteString
+                        } else {
+                            print("no postImageURL")
+                        }
+                        
+                        // ユーザーアイコンと投稿画像の両方のDLURLを処理
+                        let consts = self.consts
+                        let sendValues : [String: Any] = [
+                            consts.userName: self.user.name,
+                            consts.userIconUrlStr: userIconUrlStr,
+                            consts.postImageUrlStr: postImageUrlStr,
+                            consts.postText: postText,
+                            consts.postDate: self.generateDateString()
+                        ]
+                        
+                        // Firebase Realtime DB
+                        self.timelineRef.updateChildValues(sendValues)
+                    }
+                }
+            } // userIconRef.downloadURLがここまで
         }
     }
 }
