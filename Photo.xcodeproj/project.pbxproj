@@ -17,9 +17,22 @@
 		487E8F332D6945F400683EEE /* Photo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Photo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		487E8F5B2D6970A400683EEE /* Exceptions for "Photo" folder in "Photo" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 487E8F322D6945F400683EEE /* Photo */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		487E8F352D6945F400683EEE /* Photo */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				487E8F5B2D6970A400683EEE /* Exceptions for "Photo" folder in "Photo" target */,
+			);
 			path = Photo;
 			sourceTree = "<group>";
 		};
@@ -274,6 +287,7 @@
 				DEVELOPMENT_TEAM = X39V762XRA;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Photo/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -303,6 +317,7 @@
 				DEVELOPMENT_TEAM = X39V762XRA;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Photo/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
