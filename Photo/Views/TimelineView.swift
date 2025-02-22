@@ -14,7 +14,7 @@ struct TimelineView: View {
             // 投稿一覧を表示するリスト
             List {
                 ForEach(viewModel.posts) { post in
-                    PostView()
+                    PostView(post: post)
                 }
             }
             // 投稿一覧画面表示後にFirebaseから情報一覧取得

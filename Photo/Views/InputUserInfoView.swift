@@ -12,6 +12,7 @@ struct InputUserInfoView: View {
     @State private var showAlert = false  // アラートの表示・非表示を制御する変数
     @State var iconImage: UIImage?
     @State var isPresentedNextView: Bool = false
+    @ObservedObject var viewModel: TimelineViewModel
 
     var body: some View {
         NavigationStack {
@@ -47,7 +48,7 @@ struct InputUserInfoView: View {
             
             // 画面遷移先指定
             .navigationDestination(isPresented: $isPresentedNextView) {
-                TimelineView()
+                TimelineView(viewModel: viewModel)
             }
         }
     }
@@ -57,10 +58,13 @@ struct InputUserInfoView: View {
             showAlert = true
             return
         }
+        var selectedImg = UIImage(named: Constants().noImage)!
+        // アイコン画像有無チェック
+        if let iconImage {
+            selectedImg = iconImage
+        }
+        let newUser = User(name: name, iconImage: selectedImg)
+        viewModel.user = newUser
         isPresentedNextView = true
     }
-}
-
-#Preview {
-    InputUserInfoView()
 }
