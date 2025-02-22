@@ -17,7 +17,7 @@ class AppDelete: NSObject, UIApplicationDelegate {
 
 @main
 struct PhotoApp: App {
-    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    @UIApplicationDelegateAdaptor(AppDelete.self) var delegate
     var body: some Scene {
         WindowGroup {
             ContentView()
