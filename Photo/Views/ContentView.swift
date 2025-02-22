@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject var viewModel = TimelineViewModel()
     var body: some View {
-//        LoginView()
-        InputUserInfoView()
+        LoginView(viewModel: viewModel)
     }
 }
 
