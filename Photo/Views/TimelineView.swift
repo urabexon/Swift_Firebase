@@ -8,17 +8,24 @@
 import SwiftUI
 
 struct TimelineView: View {
+    @ObservedObject var viewModel: TimelineViewModel
     var body: some View {
         NavigationStack {
             // 投稿一覧を表示するリスト
             List {
-                ForEach(0...3, id: \.self) { _ in
+                ForEach(viewModel.posts) { post in
                     PostView()
+                }
+            }
+            // 投稿一覧画面表示後にFirebaseから情報一覧取得
+            .onAppear {
+                DispatchQueue.main.async {
+                    viewModel.fetchPosts()
                 }
             }
             // 投稿作成画面へのリンク
             NavigationLink {
-                CreatePostView()
+                CreatePostView(viewModel: viewModel)
                     .navigationTitle("新規投稿作成")
             } label: {
                 Image(systemName: "rectangle.and.pencil.and.ellipsis")
@@ -27,8 +34,4 @@ struct TimelineView: View {
             .navigationTitle("投稿一覧")
         }
     }
-}
-
-#Preview {
-    TimelineView()
 }
