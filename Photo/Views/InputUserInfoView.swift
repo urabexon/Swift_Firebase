@@ -9,6 +9,7 @@ import SwiftUI
 
 struct InputUserInfoView: View {
     @State private var name = "" // テキストフィールドに入力された名前を受け取る
+    @State private var showAlert = false  // アラートの表示・非表示を制御する変数
     var body: some View {
         NavigationStack {
             // この画面の説明文を表示
@@ -38,12 +39,17 @@ struct InputUserInfoView: View {
                 .buttonStyle(.borderedProminent)
             }
             .padding(.horizontal, 30)
+            
+            // ユーザー名未入力時アラート
+            .alert("名前を入力してください", isPresented: $showAlert) {
+                Text("OK")
+            }
         }
     }
     // ユーザー情報を登録する処理
     func submitUserInfo() {
         if name.isEmpty {
-            print("名前が入力されてないよ")
+            showAlert = true
             return
         }
     }
