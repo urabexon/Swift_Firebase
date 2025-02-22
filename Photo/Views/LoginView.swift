@@ -10,6 +10,7 @@ import FirebaseAuth
 
 struct LoginView: View {
     @State private var isNextViewPresented = false // 次の画面の表示制御用
+    @ObservedObject var viewModel: TimelineViewModel
     var body: some View {
         NavigationStack {
             Button {
@@ -23,7 +24,7 @@ struct LoginView: View {
             
             // 画面遷移先と、その画面の表示を制御する変数を設定
             .navigationDestination(isPresented: $isNextViewPresented) {
-                InputUserInfoView()
+                InputUserInfoView(viewModel: viewModel)
             }
         }
     }
@@ -37,8 +38,4 @@ struct LoginView: View {
             isNextViewPresented = true // 匿名ログインができたら画面遷移
         }
     }
-}
-
-#Preview {
-    LoginView()
 }
