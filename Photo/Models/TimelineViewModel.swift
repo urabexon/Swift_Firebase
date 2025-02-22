@@ -96,5 +96,32 @@ class TimelineViewModel: ObservableObject {
             } // userIconRef.downloadURLがここまで
         }
     }
+    // DBから投稿を取得する
+    func fetchPosts() {
+        // 投稿日時順に直近100件まで取得する。snapshotに取得したものが入ってくる
+        dbRef.queryLimited(toLast: 100).queryOrdered(byChild: consts.postDate).observe(.value, with: { snapshot in
+            self.posts = [] // 変数postを初期化
+            var loadedPosts: [Post] = []
+            
+            // snapshotから投稿を1件ずつ取り出して、その中身の値からPost型のオブジェクトをつくって配列に追加
+            if let snapshots = snapshot.children.allObjects as? [DataSnapshot] {
+                // 含まれている投稿の数だけ繰り返して処理
+                for snap in snapshots {
+                    if let postData = snap.value as? [String: Any] {
+                        let consts = self.consts
+                        let post = Post(userName: postData[consts.userName] as! String,
+                                        userIconUrlStr: postData[consts.userIconUrlStr] as! String,
+                                        postImageUrlStr: postData[consts.postImageUrlStr] as! String,
+                                        postText: postData[consts.postText] as! String,
+                                        postDate: postData[consts.postDate] as! String)
+                        loadedPosts.append(post) // Post型のオブジェクトを配列に追加
+                    }
+                }
+                self.posts = loadedPosts.reversed()
+            }
+        }) { error in
+            print(error.localizedDescription)
+        }
+    }
 }
 
