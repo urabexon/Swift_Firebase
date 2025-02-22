@@ -10,6 +10,9 @@ import SwiftUI
 struct InputUserInfoView: View {
     @State private var name = "" // テキストフィールドに入力された名前を受け取る
     @State private var showAlert = false  // アラートの表示・非表示を制御する変数
+    @State var iconImage: UIImage?
+    @State var isPresentedNextView: Bool = false
+
     var body: some View {
         NavigationStack {
             // この画面の説明文を表示
@@ -18,10 +21,7 @@ struct InputUserInfoView: View {
                 .padding(.horizontal, 30)
             
             // ユーザーのアイコン画像になるもの
-            Image("noimage")
-                .resizable()
-                .scaledToFit()
-                .clipShape(.rect(cornerRadius: 10))
+            ImageCaptureView(capturedImage: $iconImage)
                 .padding(30)
             
             // 名前入力欄と登録ボタンを横並びにするためにでHStackを使用
@@ -44,6 +44,11 @@ struct InputUserInfoView: View {
             .alert("名前を入力してください", isPresented: $showAlert) {
                 Text("OK")
             }
+            
+            // 画面遷移先指定
+            .navigationDestination(isPresented: $isPresentedNextView) {
+                TimelineView()
+            }
         }
     }
     // ユーザー情報を登録する処理
@@ -52,6 +57,7 @@ struct InputUserInfoView: View {
             showAlert = true
             return
         }
+        isPresentedNextView = true
     }
 }
 
