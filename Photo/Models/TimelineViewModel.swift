@@ -50,6 +50,22 @@ class TimelineViewModel: ObservableObject {
         var postImageUrlStr = ""
         let metadata = StorageMetadata()
         metadata.contentType = "image/jpeg"
+        
+        // ユーザーアイコン画像をアップロード
+        let uploadtaskUserIcon = userIconRef.putData(userIconData, metadata: metadata) { metadata, error in
+            if error != nil {
+                print(error!)
+                return
+            }
+            // ユーザーアイコンダウンロードURL
+            userIconRef.downloadURL() { url, error in
+                if let url {
+                    userIconUrlStr = url.absoluteString
+                } else {
+                    print("no userIconURL")
+                }
+            }
+        }
     }
 }
 
